@@ -92,7 +92,7 @@ $$
 $$
 \min \left( 
 \sum_{e \in E} c_e \cdot y_e + 
-\sum_{v \in V} f_v \cdot \sum_{\substack{k \in K \\ v \neq s_k \\ v \neq t_k}} \sum_{\substack{p \in \Pi_k \\ v \in p}} x^k_p 
+\sum_{k \in K} \sum_{p \in \Pi_k}  \sum_{\substack{v \in p \\ v \neq s_k \\ v \neq t_k}}  f_v \cdot x^k_p 
 \right)
 $$
 
@@ -115,25 +115,25 @@ $$
 
 2. **Пропускная способность рёбер:**
    $$
-   \sum_{k \in K} \sum_{\substack{p \in \Pi_k \\ e \in p}} x^k_p \leq u_e \quad \forall e \in E
+   \sum_{k \in K} \sum_{p \in \Pi_k : e \in p} x^k_p \leq u_e \quad \forall e \in E
    $$
    *Суммарный поток по ребру $ e $ не превышает его пропускную способность.*
 
 3. **Связь между потоком и количеством ТС:**
    $$
-   \sum_{k \in K} \sum_{\substack{p \in \Pi_k \\ e \in p}} x^k_p \leq C \cdot y_e \quad \forall e \in E, \quad y_e \in \mathbb{Z}_+
+   \sum_{k \in K} \sum_{p \in \Pi_k : e \in p} x^k_p \leq C \cdot y_e \quad \forall e \in E, \quad y_e \in \mathbb{Z}_+
    $$
    *Количество ТС $ y_e $ определяется суммарным потоком на ребре $ e $.*
 
 4. **Ограничение входящей пропускной способности узлов:**
    $$
-   \sum_{\substack{k \in K \\ v \neq s_k}} \sum_{\substack{p \in \Pi_k \\ v \in p}} x^k_p \leq U_v^- \quad \forall v \in V
+   \sum_{k \in K : v \neq s_k}\sum_{p \in \Pi_k : v \in p} x^k_p \leq U_v^- \quad \forall v \in V
    $$
    *Суммарный входящий поток в узел $ v $ (кроме случаев, когда $ v $ — источник товара) не превышает $ U_v^- $.*
 
 5. **Ограничение исходящей пропускной способности узлов:**
    $$
-   \sum_{\substack{k \in K \\ v \neq t_k}} \sum_{\substack{p \in \Pi_k \\ v \in p}} x^k_p \leq U_v^+ \quad \forall v \in V
+   \sum_{\substack{k \in K : v \neq t_k}} \sum_{\substack{p \in \Pi_k : v \in p}} x^k_p \leq U_v^+ \quad \forall v \in V
    $$
    *Суммарный исходящий поток из узла $ v $ (кроме случаев, когда $ v $ — сток товара) не превышает $ U_v^+ $.*
 
