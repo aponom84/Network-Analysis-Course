@@ -2,47 +2,46 @@
 
 ## Содержание курса
 
-### 1. [Basic Graph Properties and Classic Random Graph Models](./Basic-Graph-Properties-and-Classic-Random-Graph-Models.md)
+### 1. [Базовые понятия теории графов и классические модели случайных графов](./Basic-Graph-Properties-and-Classic-Random-Graph-Models.md)
 - Основные свойства графов
 - Классические модели случайных графов
 - Сравнение различных моделей
 
-### 2. [Optimal Logistics Network](./Optimal-Logistics-Network.md)
+### 2. [Модели оптимальных логистических сетей](./Optimal-Logistics-Network.md)
 - Построение оптимальных логистических сетей
 - Учет различных типов затрат
 - Анализ трафика и потоков
 
-### 3. [P2P Networks, Algorithms, DHT, Chord, Kademlia](./P2P-Networks-Algorithms-DHT-Chord-Kademlia.md)
+### 3. [P2P Сети, Алгоритмы, DHT, Chord, Kademlia](./P2P-Networks-Algorithms-DHT-Chord-Kademlia.md)
 - Одноранговые сети
 - Распределенные хеш-таблицы (DHT)
 - Алгоритмы Chord и Kademlia
 
-### 4. [Navigable Small-Worlds and Graph-Based NN Search](./Navigable-Small-Worlds_Graph-Based-NN-Search.md)
+### 4. [Навигационные графы со свойством тесного мира и графы для приближенного поиска ближайшего соседа](./Navigable-Small-Worlds_Graph-Based-NN-Search.md)
 - Навигационные свойства сетей малого мира
 - Поиск ближайших соседей на основе графов
 - Применение в системах рекомендаций
 
-### 5. [Kleinberg Model](./Kleinberg-Model.md)
-- Модель Клейнберга для малых миров
-- Навигация в сетях малого мира
-- Алгоритмы поиска в навигационных сетях
+### 5. [Модель навигационного тестого мира Клейнберга](./Kleinberg-Model.md)
+- Модель Клейнберга 
+- Доказательство логарифмеческой оценки
 
-### 6. [Network Clustering (part 1)](./Network-Clustering-part-1.md)
+### 6. [Кластеризация в сетях - часть 1](./Network-Clustering-part-1.md)
 - Методы кластеризации сетей
 - Обнаружение сообществ
 - Алгоритмы разделения графов
 
-### 7. [Network Clustering (part 1)](./Network-Clustering-part-1.md)
+### 7. [TODO: Кластеризация в сетях - часть 2)](./Network-Clustering-part-2.md)
 - Методы кластеризации сетей
 - Обнаружение сообществ
 - Алгоритмы разделения графов
 
-### 8. [Graph Embeddings](./Graph-Embeddings.md)
+### 8. [Векторные вложения графов](./Graph-Embeddings.md)
 - Методы встраивания графов
 - Алгоритмы получения векторных представлений узлов
 - Применение в задачах машинного обучения
 
-### 9. [TODO: Graph Neural Networks](./)
+### 9. [TODO: Графовые](./)
 
 
 ------
@@ -69,5 +68,4 @@
 `optimal-logistic-network-contest/validator.py` – проверка решения
 
 ## Благодарности
-Илья Антонов создал `validator.py`
-Дмитрий Шустров настроил и создал соревнование в Яндекс.Контесте
+Илья Антонов создал `validator.py`. Дмитрий Шустров настроил и создал соревнование в Яндекс.Контесте
