@@ -42,6 +42,10 @@
 - Применение в задачах машинного обучения
 
 ### 9. [Графовые нейроные сети](./Graph-Neural-Networks.md)
+- Простая свёрточная нейронная сеть (GNN)
+- GraphSAGE (SAmple and aggreGatE)
+- Graph Attention Networks (GAT)
+- Обобщающий фреймвор Message Passing Neural Networks (MPNN)
 
 
 ------
