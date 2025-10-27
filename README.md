@@ -74,7 +74,7 @@
 ------
 
 ## Вопросы к экзамену
-Вопросы к экзамену перечислены в файле [Exam-Questions.md](./lectures/Exam-Questions.md)
+Вопросы к экзамену перечислены в файле [Exam-Questions.md](./exam/Exam-Questions.md)
 
 ------
 
