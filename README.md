@@ -77,6 +77,8 @@
 ## Вопросы к экзамену
 Вопросы к экзамену перечислены в файле [Exam-Questions.md](./exam/Exam-Questions.md)
 
+Конспекты для экзамена находятся в [exam_network_analysis_2025.7z](./exam/exam_network_analysis_2025.7z)
+
 ------
 
 ## Благодарности
