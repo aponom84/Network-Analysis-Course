@@ -1,0 +1,98 @@
+% !TEX program = lualatex
+% ---------------------------------------------------------------------------
+% Шаблон презентации курса «Методы анализа сетевых структур».
+% Скопируйте папку template/ в новую папку рядом и правьте template.tex.
+% Сборка: make -C .. template   (или latexmk -lualatex в этой папке, см. ../README.md)
+% Здесь показаны все типовые слайды стиля.
+% ---------------------------------------------------------------------------
+\documentclass[aspectratio=169,10pt]{beamer}
+\usetheme{HSEnet}
+\usepackage[russian]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usetikzlibrary{arrows.meta,positioning}
+
+\course{Методы анализа сетевых структур}
+\lecturelabel{Лекция N}
+\title{Заголовок лекции в одну или две строки}
+\subtitle{Подзаголовок: о чём лекция}
+\author{Александр Пономаренко}
+\institute{НИУ ВШЭ -- Нижний Новгород, магистратура «Интеллектуальный анализ данных»}
+\date{Весна 2027}
+
+\begin{document}
+\maketitle
+
+\section{Раздел лекции}
+
+\begin{frame}{Обычный слайд: заголовок и список}
+\begin{itemize}
+\item Заголовок слайда --- утверждение или вопрос, а не тема из одного слова
+\item Не больше 5--6 пунктов на слайде; пункт --- одна мысль
+\item Акцент --- \alert{красным} или \textbf{полужирным}, не подчёркиванием
+  \begin{itemize}
+  \item второй уровень --- только когда без него никак
+  \end{itemize}
+\end{itemize}
+\begin{block}{Блок: определение или формула}
+\[
+  L = D - A,\qquad x^\top L x = \sum_{(i,j)\in E} (x_i - x_j)^2 .
+\]
+\end{block}
+\takeaway{Плашка-вывод: одна фраза, которую студент должен унести со слайда.}
+\end{frame}
+
+\begin{frame}{Две колонки: рисунок и текст}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\centering
+\begin{tikzpicture}[v/.style={circle,draw=hseBlue,thick,fill=hsePale,minimum size=6mm,font=\small},
+  e/.style={-{Latex[length=2mm]},thick,draw=hseBlue!70}]
+  \node[v] (a) at (0,1.5) {$a$};  \node[v] (b) at (0,0) {$b$};
+  \node[v] (c) at (2.5,0.75) {$c$}; \node[v,fill=hseOrange!30,draw=hseOrange] (d) at (4.5,0.75) {$d$};
+  \draw[e] (a) -- (c); \draw[e] (b) -- (c); \draw[e,draw=hseOrange] (c) -- (d);
+\end{tikzpicture}
+\source{Источник рисунка или данных --- мелко и серым}
+\column{0.5\textwidth}
+\begin{alertblock}{Предупреждение}
+Типичная ошибка или подводный камень.
+\end{alertblock}
+\begin{exampleblock}{Пример}
+Конкретный числовой пример.
+\end{exampleblock}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Таблица и палитра}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Метод & время & качество\\
+\midrule
+точный & 4 ч & \textbf{1{,}00}\\
+эвристика & 10 мин & 0{,}97\\
+\bottomrule
+\end{tabular}
+\column{0.5\textwidth}
+\footnotesize
+Цвета для рисунков --- только из палитры брендбука:\\[4pt]
+\foreach \c in {hseBlue,hseLightBlue,hseSky,hseGreen,hseOrange,hseRed,hsePurple,hseYellow,hseSteel,hseTeal}{%
+  \tikz\fill[\c] (0,0) circle (1.6mm);\,}
+\\[4pt]
+\foreach \c in {hsePale,hsePaleGreen,hsePaleRed,hsePaleYellow,hseLightGray,hseGray}{%
+  \tikz\fill[\c] (0,0) circle (1.6mm);\,}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Код}
+\begin{semiverbatim}\small
+import networkx as nx
+G = nx.karate_club_graph()
+L = nx.laplacian_matrix(G)
+\end{semiverbatim}
+\end{frame}
+
+\finalframe{Вопросы?}{Александр Пономаренко\\ \href{https://github.com/aponom84/Network-Analysis-Course}{\color{white}github.com/aponom84/Network-Analysis-Course}}
+\end{document}

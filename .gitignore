@@ -2,3 +2,8 @@
 logistic_network_benchmarks
 *.zip
 *.key
+# Персональные данные студентов и личные фото
+2026/exam/students.csv
+2026/exam/exam_assignment*.csv
+2026/exam/results.xlsx
+2026/photos/

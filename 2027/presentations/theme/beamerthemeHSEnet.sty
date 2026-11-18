@@ -1,0 +1,279 @@
+% ---------------------------------------------------------------------------
+% beamerthemeHSEnet -- тема презентаций курса «Методы анализа сетевых структур»
+% (НИУ ВШЭ -- Нижний Новгород).
+%
+% Основа -- брендбук НИУ ВШЭ (https://www.hse.ru/info/brandbook/) и официальный
+% Beamer-шаблон ВШЭ 2.1 (Д. Фёдоровых): основной тёмно-синий Pantone 287,
+% шрифт HSE Sans, круглый логотип в левом верхнем углу, номер слайда справа
+% вверху, полоса фирменного паттерна на титульном и разделительных слайдах.
+% Описание стиля и правила -- в ../README.md.
+%
+% Использование (LuaLaTeX или XeLaTeX):
+%   \documentclass[aspectratio=169,10pt]{beamer}
+%   \usetheme{HSEnet}
+%   \course{Методы анализа сетевых структур}
+%   \lecturelabel{Лекция 7}  % необязательно: надпись над заголовком и в подвале
+%
+% Опции темы:
+%   sectionpages=true|false  -- синий слайд-разделитель перед \section (true)
+%   english                  -- английская версия логотипа не входит в тему;
+%                               опция только переключает подписи
+% ---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemeHSEnet}[2026/11/11 HSE course theme]
+
+\RequirePackage{pgfopts}
+\newif\ifhse@sectionpages \hse@sectionpagestrue
+\newif\ifhse@english
+\pgfkeys{/beamerthemehsenet/.cd,
+  sectionpages/.is if=hse@sectionpages,
+  english/.code=\hse@englishtrue}
+\ProcessPgfOptions{/beamerthemehsenet}
+
+\RequirePackage{fontspec}
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\RequirePackage{etoolbox}
+
+% Папка темы: логотипы и паттерн лежат в theme/hse/.  Путь задаётся
+% относительно папки с .tex (по умолчанию ../theme/hse/) или через
+% \hsethemedir{...} до \begin{document}.
+\providecommand{\hse@dir}{../theme/hse/}
+\newcommand{\hsethemedir}[1]{\renewcommand{\hse@dir}{#1}}
+
+% ===== Цвета (брендбук ВШЭ, палитра официального PPTX-шаблона) ==============
+\definecolor{hseBlue}{HTML}{102D69}      % основной: Pantone 287
+\definecolor{hseLightBlue}{HTML}{234A9B} % светло-синий: Pantone 2736
+\definecolor{hseSky}{HTML}{11A0D7}
+\definecolor{hseGreen}{HTML}{029C63}
+\definecolor{hseOrange}{HTML}{EB681F}
+\definecolor{hsePurple}{HTML}{7D4EBA}
+\definecolor{hseRed}{HTML}{E61F3D}
+\definecolor{hseYellow}{HTML}{FBBA00}
+\definecolor{hseSteel}{HTML}{7DA0D3}
+\definecolor{hseTeal}{HTML}{47A0A0}
+\definecolor{hsePale}{HTML}{CDDDF0}      % светлые тона палитры
+\definecolor{hsePaleGreen}{HTML}{D7EBB4}
+\definecolor{hsePaleRed}{HTML}{F6C3C3}
+\definecolor{hsePaleYellow}{HTML}{FFDC91}
+\definecolor{hseGray}{HTML}{6B7280}      % рекомендованные серые
+\definecolor{hseLightGray}{HTML}{D9D9D9}
+\definecolor{hseBg}{HTML}{F2F5FA}        % фон блоков: 30% от hsePale
+\definecolor{hseText}{HTML}{1A1A1A}
+
+% ===== Шрифты ==============================================================
+% HSE Sans (брендбук). Берётся из theme/fonts/ (лежит в репозитории),
+% иначе -- из системы; если нет нигде -- Fira Sans из TeX Live.
+\newcommand{\hse@fontpath}{}
+\IfFileExists{\hse@dir../fonts/HSESans-Regular.otf}{\renewcommand{\hse@fontpath}{\hse@dir../fonts/}}{}
+\IfFileExists{\hse@dir../fonts/HSESans-Regular.otf}{\@firstoftwo}{\IfFontExistsTF{HSESans-Regular.otf}}{%
+  \setsansfont{HSESans}[Path=\hse@fontpath,Extension=.otf,UprightFont=*-Regular,BoldFont=*-SemiBold,
+    ItalicFont=*-Italic,BoldItalicFont=*-Italic]
+  \newfontfamily\hsethin{HSESans-Thin}[Path=\hse@fontpath,Extension=.otf]
+  \newfontfamily\hseblack{HSESans-Black}[Path=\hse@fontpath,Extension=.otf]
+  \newfontfamily\hsebold{HSESans-Bold}[Path=\hse@fontpath,Extension=.otf]
+}{%
+  \PackageWarning{beamerthemeHSEnet}{HSE Sans not found, using Fira Sans}
+  \setsansfont{FiraSans}[Extension=.otf,UprightFont=*-Book,BoldFont=*-SemiBold,
+    ItalicFont=*-BookItalic,BoldItalicFont=*-SemiBoldItalic]
+  \newfontfamily\hsethin{FiraSans}[Extension=.otf,UprightFont=*-ExtraLight]
+  \newfontfamily\hseblack{FiraSans}[Extension=.otf,UprightFont=*-Black]
+  \newfontfamily\hsebold{FiraSans}[Extension=.otf,UprightFont=*-Bold]
+}
+\IfFontExistsTF{FiraMono}{%
+  \setmonofont{FiraMono}[Extension=.otf,UprightFont=*-Regular,BoldFont=*-Bold,Scale=0.9]}{}
+\usefonttheme{professionalfonts}% формулы -- Computer Modern, не трогаем
+
+% ===== Размеры и сетка =====================================================
+% Слайд 16:9 = 160 x 90 мм.  Поля 10 мм; шапка 14 мм: логотип 7 мм,
+% заголовок справа от него, номер слайда у правого поля.
+\setbeamersize{text margin left=10mm,text margin right=10mm}
+\newlength{\hse@seal}\setlength{\hse@seal}{7mm}
+\setbeamertemplate{navigation symbols}{}
+
+% ===== Цвета элементов =====================================================
+\setbeamercolor{normal text}{fg=hseText,bg=white}
+\setbeamercolor{background canvas}{bg=white}
+\setbeamercolor{structure}{fg=hseBlue}
+\setbeamercolor{frametitle}{fg=hseBlue}
+\setbeamercolor{framesubtitle}{fg=hseGray}
+\setbeamercolor{title}{fg=hseBlue}
+\setbeamercolor{subtitle}{fg=hseLightBlue}
+\setbeamercolor{alerted text}{fg=hseRed}
+\setbeamercolor{example text}{fg=hseGreen}
+\setbeamercolor{item}{fg=hseBlue}
+\setbeamercolor{block title}{fg=white,bg=hseBlue}
+\setbeamercolor{block body}{fg=hseText,bg=hseBg}
+\setbeamercolor{block title alerted}{fg=white,bg=hseRed}
+\setbeamercolor{block body alerted}{fg=hseText,bg=hsePaleRed!45}
+\setbeamercolor{block title example}{fg=white,bg=hseGreen}
+\setbeamercolor{block body example}{fg=hseText,bg=hsePaleGreen!45}
+\setbeamercolor{footline}{fg=hseGray}
+\setbeamercolor{page number in head/foot}{fg=hseBlue}
+\setbeamercolor{caption name}{fg=hseBlue}
+
+% ===== Шрифты элементов ====================================================
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small,series=\mdseries}
+\setbeamerfont{title}{size=\huge,family=\hsebold}
+\setbeamerfont{subtitle}{size=\large}
+\setbeamerfont{block title}{size=\normalsize,series=\bfseries}
+\setbeamerfont{block body}{size=\normalsize}
+\setbeamerfont{footline}{size=\tiny}
+\setbeamerfont{caption}{size=\scriptsize}
+
+% ===== Списки и блоки ======================================================
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamertemplate{caption}[default]
+\setlength{\leftmargini}{1.2em}
+\setlength{\leftmarginii}{1.1em}
+
+% без переносов в заголовках
+\newcommand{\hse@nohyph}{\lefthyphenmin=62\righthyphenmin=62\hyphenpenalty=10000\exhyphenpenalty=10000\relax}
+
+% ===== Курс и лекция =======================================================
+\newcommand{\hse@course}{Методы анализа сетевых структур}
+\newcommand{\hse@lecture}{}
+\newcommand{\course}[1]{\renewcommand{\hse@course}{#1}}
+\newcommand{\lecturelabel}[1]{\renewcommand{\hse@lecture}{#1}}
+\newcommand{\insertcourse}{\hse@course}
+
+% ===== Шапка и подвал обычного слайда ======================================
+\setbeamertemplate{headline}{}
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip\vskip4.2mm
+  \hspace*{\dimexpr\hse@seal+3mm\relax}%
+  \begin{minipage}[t]{\dimexpr\textwidth-\hse@seal-14mm\relax}
+    \raggedright
+    \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
+    \hse@nohyph
+    \insertframetitle\par
+    \ifx\insertframesubtitle\@empty\else
+      {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
+    \fi
+  \end{minipage}\par
+  \vskip3mm
+}
+% Логотип и номер слайда рисуются фоном, поэтому есть и на слайдах без заголовка
+\setbeamertemplate{background}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west,inner sep=0] at ([xshift=10mm,yshift=-4.5mm]current page.north west)
+      {\includegraphics[width=\hse@seal]{\hse@dir hse-seal.pdf}};
+    \node[anchor=north east,inner sep=0,font=\small,text=hseBlue]
+      at ([xshift=-10mm,yshift=-6.6mm]current page.north east) {\insertframenumber};
+  \end{tikzpicture}%
+}
+\setbeamertemplate{footline}{%
+  \usebeamerfont{footline}\usebeamercolor[fg]{footline}\hypersetup{linkcolor=hseGray}%
+  \hspace*{10mm}\insertcourse
+  \ifdefempty{\hse@lecture}{}{\ \textperiodcentered\ \hse@lecture}
+  \ \textperiodcentered\ \insertshorttitle
+  \vskip3.2mm
+}
+
+% ===== Титульный слайд =====================================================
+% Белый фон, полоса паттерна у правого края (7,1% ширины, как в PPTX-шаблоне),
+% логотип с названием университета слева вверху.
+\newcommand{\hse@pattern}[1]{%
+  \node[anchor=north east,inner sep=0] at (current page.north east)
+    {\includegraphics[width=0.0708\paperwidth,height=\paperheight]{\hse@dir hse-pattern-#1.png}};}
+
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \hse@pattern{light}
+    \node[anchor=north west,inner sep=0] at ([xshift=10mm,yshift=-8mm]current page.north west)
+      {\includegraphics[height=10mm]{\hse@dir hse-name.pdf}};
+    \node[anchor=north west,inner sep=0,text width=118mm,align=left]
+      at ([xshift=10mm,yshift=-25mm]current page.north west) {%
+      {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\small
+        \insertcourse\ifdefempty{\hse@lecture}{}{\ \textperiodcentered\ \hse@lecture}\par}
+      \vskip3mm
+      {\usebeamerfont{title}\usebeamercolor[fg]{title}%
+        \hse@nohyph\linespread{0.95}\selectfont
+        \inserttitle\par}
+      \ifx\insertsubtitle\@empty\else
+        \vskip3mm{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\hse@nohyph\insertsubtitle\par}
+      \fi};
+    \node[anchor=south west,inner sep=0,text width=118mm,align=left,font=\small]
+      at ([xshift=10mm,yshift=8mm]current page.south west) {%
+      {\color{hseBlue}\bfseries\insertauthor\par}
+      \vskip1mm{\color{hseGray}\footnotesize\insertinstitute\par}
+      \vskip3mm{\color{hseGray}\footnotesize\insertdate\par}};
+  \end{tikzpicture}%
+}
+% \maketitle как отдельный слайд без шапки
+\renewcommand{\maketitle}{%
+  {\setbeamertemplate{background}{}%
+   \setbeamertemplate{footline}{}%
+   \begin{frame}[plain]\titlepage\end{frame}}}
+
+% ===== Слайд-разделитель (раздел лекции) ===================================
+% Синий фон, белый логотип, номер раздела HSE Sans Thin, название -- Bold.
+\newcommand{\hse@darkframe}[1]{%
+  {\setbeamercolor{background canvas}{bg=hseBlue}%
+   \hypersetup{linkcolor=white,urlcolor=white}%
+   \setbeamertemplate{background}{}%
+   \setbeamertemplate{footline}{}%
+   \begin{frame}[plain,noframenumbering]
+   \begin{tikzpicture}[remember picture,overlay]
+     \hse@pattern{dark}
+     \node[anchor=north west,inner sep=0] at ([xshift=10mm,yshift=-8mm]current page.north west)
+       {\includegraphics[width=12mm]{\hse@dir hse-seal-dark.pdf}};
+     #1
+   \end{tikzpicture}
+   \end{frame}}}
+
+\setbeamertemplate{section page}{%
+  \node[anchor=south west,inner sep=0,text=white,font=\hsethin\fontsize{54}{54}\selectfont]
+    at ([xshift=10mm,yshift=40mm]current page.south west)
+    {\ifnum\value{section}<10 0\fi\arabic{section}};
+  \node[anchor=north west,inner sep=0,text=white,text width=115mm,align=left,
+    font=\bfseries\fontsize{24}{27}\selectfont]
+    at ([xshift=10mm,yshift=36mm]current page.south west)
+    {\hse@nohyph\insertsectionhead};
+}
+\newcommand{\hsesectionpage}{\hse@darkframe{\usebeamertemplate{section page}}}
+\ifhse@sectionpages
+  \AtBeginSection{\hsesectionpage}
+\fi
+
+% ===== Слайд-разделитель части (для лекций из нескольких пар) ===============
+% \part{Название} даёт синий слайд «Часть I» с названием; нумерация разделов
+% при этом продолжается сквозная.
+\setbeamertemplate{part page}{%
+  \node[anchor=south west,inner sep=0,text=white,font=\hsethin\fontsize{32}{32}\selectfont]
+    at ([xshift=10mm,yshift=46mm]current page.south west)
+    {Часть \Roman{part}};
+  \node[anchor=north west,inner sep=0,text=white,text width=115mm,align=left,
+    font=\hseblack\fontsize{26}{29}\selectfont]
+    at ([xshift=10mm,yshift=42mm]current page.south west)
+    {\hse@nohyph\insertpart};
+}
+\newcommand{\hsepartpage}{\hse@darkframe{\usebeamertemplate{part page}}}
+\AtBeginPart{\hsepartpage}
+
+% ===== Завершающий слайд ===================================================
+% \finalframe{Спасибо!}{строки контактов}
+\newcommand{\finalframe}[2]{%
+  \hse@darkframe{%
+    \node[anchor=south west,inner sep=0,text=white,font=\hseblack\fontsize{40}{42}\selectfont]
+      at ([xshift=10mm,yshift=52mm]current page.south west) {#1};
+    \node[anchor=north west,inner sep=0,text=white,text width=115mm,align=left,font=\small]
+      at ([xshift=10mm,yshift=46mm]current page.south west) {#2};
+    \node[anchor=south west,inner sep=0] at ([xshift=10mm,yshift=8mm]current page.south west)
+      {\includegraphics[height=8mm]{\hse@dir hse-name-dark.pdf}};
+  }}
+
+% ===== Вспомогательные команды =============================================
+% Акцентная плашка-вывод внизу слайда
+\newcommand{\takeaway}[1]{%
+  \par\smallskip\noindent
+  \colorbox{hsePale}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\raggedright\color{hseBlue}\small #1}}\par}
+% Подпись-источник мелким серым
+\newcommand{\source}[1]{{\par\color{hseGray}\scriptsize #1\par}}
+
+\hypersetup{colorlinks=true,linkcolor=hseLightBlue,urlcolor=hseLightBlue,citecolor=hseLightBlue}
+
+\mode<all>

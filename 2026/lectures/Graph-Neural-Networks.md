@@ -181,7 +181,7 @@ $$ h_v^{(l+1)} = \Vert_{k=1}^K σ ( \sum_{u ∈ N(v) \cup {v}} α_{vu}^k Θ^k h_
 ## 7. Постановка эксперимента.  Типы обучения.
 ### 7.1 Трансдуктивное обучение
 
-  <img src="pics/gnn-transductive-setup.png" alt="Transductive setup" width="400"/>
+  <img src="../pics/gnn-transductive-setup.png" alt="Transductive setup" width="400"/>
 
   - В обучении, тесте и валидации используется 1 граф
   - Все узлы и все рёбра присутствуют во время обучения
@@ -190,13 +190,13 @@ $$ h_v^{(l+1)} = \Vert_{k=1}^K σ ( \sum_{u ∈ N(v) \cup {v}} α_{vu}^k Θ^k h_
   
    
 ### 7.2 Индуктивное обучение
-![Inductive setup](pics/gnn-inductive-setup.png)
+![Inductive setup](../pics/gnn-inductive-setup.png)
   - Модель обучается и тестируется на разных графах. То есть на одном наборе графов обучается и применяется к новым, ранее невиданным.
   - Пример: PPI (Protein-Protein Interaction).
   
 ### 7.3 Пример преимущество трансдукции на общем случае
 ---
-  <img src="pics/general-transductive-setup.png" alt="General transductive setup" width="200"/>
+  <img src="../pics/general-transductive-setup.png" alt="General transductive setup" width="200"/>
   
   "Преимущество трансдукции заключается в возможности учитывать все точки, а не только помеченные, при выполнении задачи классификации. В этом случае трансдуктивные алгоритмы будут классифицировать непомеченные точки в соответствии с кластерами, к которым они естественным образом принадлежат. Таким образом, точки в середине, скорее всего, будут помечены как «B», поскольку они расположены очень близко к этому кластеру" ([цитата из Википедии](https://en.wikipedia.org/wiki/Transduction_(machine_learning)) )
 
