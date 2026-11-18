@@ -7,3 +7,7 @@ logistic_network_benchmarks
 2026/exam/exam_assignment*.csv
 2026/exam/results.xlsx
 2026/photos/
+2027/optimal-logistic-network-contest/data/
+2027/optimal-logistic-network-contest/yandex-contest/build/
+2027/optimal-logistic-network-contest/submission.py
+__pycache__/
